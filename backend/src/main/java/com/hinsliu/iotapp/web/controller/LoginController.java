@@ -3,6 +3,7 @@ package com.hinsliu.iotapp.web.controller;
 import com.hinsliu.iotapp.biz.common.UserLoginManager;
 import com.hinsliu.iotapp.domain.RpcResult;
 import com.hinsliu.iotapp.domain.query.UserLoginQuery;
+import com.hinsliu.iotapp.domain.query.UserRegisterForm;
 import com.hinsliu.iotapp.domain.view.common.UserInfoDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,8 +34,8 @@ public class LoginController {
      * @return: void
      */
     @RequestMapping(value = "/login", method = {RequestMethod.POST})
-    public RpcResult<UserInfoDTO> login(@RequestBody(required = false) UserLoginQuery user) {
-        return userLoginManager.loginValidation(user);
+    public RpcResult<UserInfoDTO> login(@RequestBody(required = false) UserLoginQuery query) {
+        return userLoginManager.loginValidation(query);
     }
 
     @RequestMapping(value = "/callback")
@@ -44,7 +45,7 @@ public class LoginController {
 
     @RequestMapping(value =  "/register", method = {RequestMethod.POST})
     public RpcResult<UserInfoDTO> register(@RequestBody(required = false) UserRegisterForm query) {
-
+        return userLoginManager.register(query);
     }
 
 }

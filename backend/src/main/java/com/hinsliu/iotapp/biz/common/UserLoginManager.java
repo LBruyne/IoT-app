@@ -71,7 +71,7 @@ public class UserLoginManager {
     /**
      * @description: callback for redirection to /app/callback
      * @author: liuxuanming
-     * @date: 2021/3/30 4:17 下午
+     * @date: 2021/3/30 4:34 下午
      * @params: []
      * @return: com.hinsliu.iotapp.domain.RpcResult<java.lang.String>
      */

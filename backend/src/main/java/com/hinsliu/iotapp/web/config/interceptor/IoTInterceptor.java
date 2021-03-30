@@ -49,13 +49,11 @@ public class IoTInterceptor implements HandlerInterceptor {
 
             // get token
             String token = request.getHeader(tokenHeader);
-            logger.info("token:" + token);
 
             // validate the token
             RedisUtil redis = RedisUtil.getInstance();
             if (token != null && token.length() != 0) {
                 String userName = redis.get(token);
-                logger.info("userName:" + userName);
                 // if the token is existed.
                 // update the token
                 if(userName != null && !userName.equals("")) {
@@ -64,19 +62,12 @@ public class IoTInterceptor implements HandlerInterceptor {
                 }
             }
 
-            PrintWriter out = null;
             try {
                 response.sendRedirect("/app/callback");
                 return false;
             }
             catch (Exception e) {
                 logger.warn(e.getMessage(), e);
-            }
-            finally {
-                if (out != null) {
-                    out.flush();
-                    out.close();
-                }
             }
         }
 
