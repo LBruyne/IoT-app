@@ -9,11 +9,17 @@ import java.io.Serializable;
  */
 public class PageParam implements Serializable {
 
+    private static final Integer MAX_PAGE_SIZE = 15;
+
     private Integer page;
 
     private Integer pageSize;
 
     private Integer offset;
+
+    PageParam() {
+        this.setOffset();
+    }
 
     public Integer getPage() {
         return page;
@@ -32,8 +38,19 @@ public class PageParam implements Serializable {
     }
 
     public Integer getOffset() {
-        if(getPage() == null || getPageSize() == null) return null;
-        return (getPage() - 1) * getPageSize();
+        return offset;
     }
 
+    public void setOffset() {
+        if(getPage() > 0 && getPageSize() > 0) {
+            this.offset = (page - 1) * pageSize;
+        }
+        else {
+            this.offset = 0;
+        }
+    }
+
+    public void setOffset(Integer offset) {
+        this.offset = offset;
+    }
 }

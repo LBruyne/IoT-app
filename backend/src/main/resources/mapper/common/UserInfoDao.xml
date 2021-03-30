@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hinsliu.iotapp.dal.common.UserInfoDao">
+    <resultMap id="BaseResultMap" type="com.hinsliu.iotapp.domain.model.common.UserInfoDO">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="name" jdbcType="VARCHAR" property="userName" />
+        <result column="password" jdbcType="VARCHAR" property="userPassword" />
+        <result column="email" jdbcType="VARCHAR" property="email" />
+        <result column="avatar" jdbcType="VARCHAR" property="avatarUrl" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        `id`, `name`, `password`, `email`, `avatar`
+    </sql>
+
+    <sql id="Base_where_condition">
+        <if test="userName != null">
+            and name = #{userName}
+        </if>
+        <if test="userPassword != null">
+            and password = #{userPassword}
+        </if>
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"></include>
+        FROM t_user_info
+        WHERE id = #{id, jdbcType=INTEGER}
+    </select>
+
+    <select id="queryByInfo" parameterType="com.hinsliu.iotapp.domain.query.UserLoginQuery" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"></include>
+        FROM t_user_info
+        <where>
+            <include refid="Base_where_condition"></include>
+        </where>
+    </select>
+
+</mapper>

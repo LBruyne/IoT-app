@@ -1,4 +1,4 @@
-package com.hinsliu.iotapp.domain.model;
+package com.hinsliu.iotapp.domain.model.common;
 
 import java.io.Serializable;
 
@@ -23,7 +23,7 @@ public class UserInfoDO implements Serializable {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

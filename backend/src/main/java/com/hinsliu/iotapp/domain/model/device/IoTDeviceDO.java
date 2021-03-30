@@ -1,4 +1,4 @@
-package com.hinsliu.iotapp.domain.model;
+package com.hinsliu.iotapp.domain.model.device;
 
 import java.io.Serializable;
 
@@ -10,6 +10,8 @@ import java.io.Serializable;
 public class IoTDeviceDO implements Serializable {
 
     private Integer id;
+
+    private String code;
 
     private String name;
 
@@ -31,6 +33,14 @@ public class IoTDeviceDO implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getName() {

@@ -24,11 +24,11 @@ public class RpcResult<T> implements Serializable {
         this.data = data;
     }
 
-    public RpcResult<T> successResult(T data) {
+    public static<T> RpcResult<T> successResult(T data) {
         return new RpcResult<T>(true, ErrorCode.SUCCESS.getCode(), ErrorCode.SUCCESS.getDesc(), data);
     }
 
-    public RpcResult<T> errorResult(String msg) {
+    public static<T> RpcResult<T> errorResult(String msg) {
         return new RpcResult<T>(false, ErrorCode.FAIL.getCode(), msg, null);
     }
 
@@ -39,6 +39,13 @@ public class RpcResult<T> implements Serializable {
     public void setSuccess(Boolean success) {
         this.success = success;
         this.setCode(success ? ErrorCode.SUCCESS.getCode() : this.getCode());
+    }
+
+    public void setSuccess(Boolean success, T data) {
+        this.success = success;
+        this.message = "success";
+        this.setCode(success? ErrorCode.SUCCESS.getCode(): this.getCode());
+        this.setData(data);
     }
 
     public int getCode() {

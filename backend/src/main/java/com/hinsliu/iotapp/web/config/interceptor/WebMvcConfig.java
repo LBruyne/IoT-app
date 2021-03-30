@@ -26,6 +26,5 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/app/userinfo")
                 .excludePathPatterns("/app/callback")
                 .excludePathPatterns("/default/**");
-
     }
 }
