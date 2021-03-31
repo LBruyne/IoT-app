@@ -38,11 +38,25 @@ public class LoginController {
         return userLoginManager.loginValidation(query);
     }
 
+    /**
+     * @description: callback page of unauthorization.
+     * @author: liuxuanming
+     * @date: 2021/3/31 9:37 下午
+     * @params: []
+     * @return: com.hinsliu.iotapp.domain.RpcResult<java.lang.String>
+     */
     @RequestMapping(value = "/callback")
     public RpcResult<String> callback() {
         return userLoginManager.unauthorizedCallback();
     }
 
+    /**
+     * @description: user register with form.
+     * @author: liuxuanming
+     * @date: 2021/3/31 9:37 下午
+     * @params: [query]
+     * @return: com.hinsliu.iotapp.domain.RpcResult<com.hinsliu.iotapp.domain.view.common.UserInfoDTO>
+     */
     @RequestMapping(value =  "/register", method = {RequestMethod.POST})
     public RpcResult<UserInfoDTO> register(@RequestBody(required = false) UserRegisterForm query) {
         return userLoginManager.register(query);

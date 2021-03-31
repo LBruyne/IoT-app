@@ -6,6 +6,7 @@ import com.hinsliu.iotapp.dal.common.UserInfoDao;
 import com.hinsliu.iotapp.domain.RpcResult;
 import com.hinsliu.iotapp.domain.model.common.UserInfoDO;
 import com.hinsliu.iotapp.domain.query.UserLoginQuery;
+import com.hinsliu.iotapp.domain.query.UserRegisterForm;
 import com.hinsliu.iotapp.domain.view.common.UserInfoDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +33,10 @@ public class UserLoginManager {
      *  if not, throw the exception: user didn't login
      */
     private static Logger logger = LoggerFactory.getLogger(UserLoginManager.class);
+
+    private static final Integer USERNAME_MIN_LEN = 6;
+
+    private static final Integer PASSWORD_MIN_LEN = 6;
 
     @Resource
     private UserInfoDao userInfoDao;
@@ -77,5 +82,62 @@ public class UserLoginManager {
      */
     public RpcResult<String> unauthorizedCallback() {
         return RpcResult.errorResult("Unauthorized.");
+    }
+
+    /**
+     * @description: register with info form.
+     * @author: liuxuanming
+     * @date: 2021/3/31 9:38 下午
+     * @params: [query]
+     * @return: com.hinsliu.iotapp.domain.RpcResult<com.hinsliu.iotapp.domain.view.common.UserInfoDTO>
+     */
+    public RpcResult<UserInfoDTO> register(UserRegisterForm query) {
+        RpcResult<UserInfoDTO> rpcResult = RpcResult.errorResult("Register failed.");
+
+        // register form validate.
+        String userName = query.getUserName();
+        String userPassword = query.getUserPassword();
+        String email = query.getEmail();
+        // USERNAME.length >= 6 and PASSWORD.length >= 6
+        if(userName == null || userName.length() < USERNAME_MIN_LEN) return RpcResult.errorResult("Invalid username.");
+        if(userPassword == null || userPassword.length() < PASSWORD_MIN_LEN) return RpcResult.errorResult("Invalid password");
+
+        try {
+            // check the existence of username and email.
+            // EQUAL, OR
+            UserInfoDO user = userInfoDao.queryByRegisterForm(query);
+            UserInfoDTO userDto = new UserInfoDTO();
+            if(user == null) {
+                user = new UserInfoDO();
+                BeanUtils.copyProperties(query, user);
+                int ret = userInfoDao.insert(user);
+                if(ret > 0) {
+                    UserLoginQuery newQuery = new UserLoginQuery();
+                    newQuery.setUserName(query.getUserName());
+                    newQuery.setUserPassword(query.getUserPassword());
+                    user = userInfoDao.queryByInfo(newQuery);
+                    if(user != null) {
+                        // build result.
+                        BeanUtils.copyProperties(user, userDto);
+
+                        RedisUtil redis = RedisUtil.getInstance();
+                        String token = TokenGenerator.generate(userName, userPassword);
+                        redis.set(token, userName);
+
+                        // put the token into result.
+                        BeanUtils.copyProperties(user, userDto);
+                        userDto.setToken(token);
+                        rpcResult.setSuccess(true, userDto);
+                    }
+                }
+            }
+            else {
+                rpcResult.setMessage("User or email exists.");
+                return rpcResult;
+            }
+        } catch (Exception e) {
+            logger.warn(e.getMessage(), e);
+        }
+        return rpcResult;
     }
 }

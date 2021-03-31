@@ -2,6 +2,7 @@ package com.hinsliu.iotapp.dal.common;
 
 import com.hinsliu.iotapp.domain.model.common.UserInfoDO;
 import com.hinsliu.iotapp.domain.query.UserLoginQuery;
+import com.hinsliu.iotapp.domain.query.UserRegisterForm;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -29,6 +30,24 @@ public interface UserInfoDao {
      * @return: com.hinsliu.iotapp.domain.model.common.UserInfoDO
      */
     public UserInfoDO queryByInfo(UserLoginQuery query);
+
+    /**
+     * @description: check if the username or the email existed.
+     * @author: liuxuanming
+     * @date: 2021/3/31 12:07 上午
+     * @params: [query]
+     * @return: com.hinsliu.iotapp.domain.model.common.UserInfoDO
+     */
+    public UserInfoDO queryByRegisterForm(UserRegisterForm query);
+
+    /**
+     * @description: insert new user info into table.
+     * @author: liuxuanming
+     * @date: 2021/3/31 5:46 下午
+     * @params: [query]
+     * @return: java.lang.Integer
+     */
+    public Integer insert(UserInfoDO query);
     
     
 }

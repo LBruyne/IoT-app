@@ -37,5 +37,19 @@
             <include refid="Base_where_condition"></include>
         </where>
     </select>
+    
+    <select id="queryByRegisterForm" parameterType="com.hinsliu.iotapp.domain.query.UserRegisterForm" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from t_user_info
+        where name = #{userName, jdbcType=VARCHAR}
+            or
+              email = #{email, jdbcType=VARCHAR}
+    </select>
+
+    <insert id="insert" parameterType="com.hinsliu.iotapp.domain.model.common.UserInfoDO">
+        insert into t_user_info (name, password, email)
+        values (#{userName, jdbcType=VARCHAR}, #{userPassword, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR})
+    </insert>
 
 </mapper>
