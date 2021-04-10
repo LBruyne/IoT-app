@@ -65,7 +65,7 @@ public class UserLoginManager {
                 // put the token into result.
                 BeanUtils.copyProperties(user, userDto);
                 userDto.setToken(token);
-                rpcResult.setSuccess(true, userDto);
+                rpcResult = RpcResult.successResult(userDto);
             }
         } catch (Exception e) {
             logger.warn(e.getMessage(), e);
@@ -87,7 +87,7 @@ public class UserLoginManager {
     /**
      * @description: register with info form.
      * @author: liuxuanming
-     * @date: 2021/3/31 9:38 下午
+     * @date: 2021/4/2 3:40 下午
      * @params: [query]
      * @return: com.hinsliu.iotapp.domain.RpcResult<com.hinsliu.iotapp.domain.view.common.UserInfoDTO>
      */
@@ -127,7 +127,7 @@ public class UserLoginManager {
                         // put the token into result.
                         BeanUtils.copyProperties(user, userDto);
                         userDto.setToken(token);
-                        rpcResult.setSuccess(true, userDto);
+                        rpcResult = RpcResult.successResult(userDto);
                     }
                 }
             }

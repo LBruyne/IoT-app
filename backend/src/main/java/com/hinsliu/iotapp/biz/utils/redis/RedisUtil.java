@@ -2,7 +2,6 @@ package com.hinsliu.iotapp.biz.utils.redis;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import redis.clients.jedis.Jedis;
 
 /**
@@ -21,7 +20,7 @@ public class RedisUtil {
     // expire at 1000 seconds later.
     private static final Integer EXPIRE_TIME = 1000;
 
-    private static RedisUtil jedisSingleton;
+    private static RedisUtil redisUtil;
 
     private static Jedis client;
 
@@ -34,7 +33,6 @@ public class RedisUtil {
         catch(Exception e) {
             logger.error(e.getMessage(), e);
         }
-
     }
 
     @Override
@@ -48,10 +46,10 @@ public class RedisUtil {
     }
 
     synchronized public static RedisUtil getInstance() {
-        if(jedisSingleton == null) {
-            jedisSingleton = new RedisUtil();
+        if(redisUtil == null) {
+            redisUtil = new RedisUtil();
         }
-        return jedisSingleton;
+        return redisUtil;
     }
 
     public void set(String key, String value) {
@@ -61,6 +59,4 @@ public class RedisUtil {
     public String get(String key) {
         return client.get(key);
     }
-
-
 }

@@ -1,5 +1,7 @@
 package com.hinsliu.iotapp.domain;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.io.Serializable;
 
 /**
@@ -28,6 +30,11 @@ public class RpcResult<T> implements Serializable {
         return new RpcResult<T>(true, ErrorCode.SUCCESS.getCode(), ErrorCode.SUCCESS.getDesc(), data);
     }
 
+    public static<T> RpcResult<T> successResult() {
+        return new RpcResult<T>(true, ErrorCode.SUCCESS.getCode(), ErrorCode.SUCCESS.getDesc(), null);
+    }
+
+
     public static<T> RpcResult<T> errorResult(String msg) {
         return new RpcResult<T>(false, ErrorCode.FAIL.getCode(), msg, null);
     }
@@ -39,13 +46,6 @@ public class RpcResult<T> implements Serializable {
     public void setSuccess(Boolean success) {
         this.success = success;
         this.setCode(success ? ErrorCode.SUCCESS.getCode() : this.getCode());
-    }
-
-    public void setSuccess(Boolean success, T data) {
-        this.success = success;
-        this.message = "success";
-        this.setCode(success? ErrorCode.SUCCESS.getCode(): this.getCode());
-        this.setData(data);
     }
 
     public int getCode() {
