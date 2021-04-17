@@ -24,7 +24,7 @@ public class MQTTConfig {
 
     public final static String USER_PASSWORD = "lxm";
 
-    public final static String TOPIC = "/iotapp/app";
+    public final static String TOPIC = "/iotapp/test";
 
     public final static String IN_CLIENT_ID = "iot-backend-subscriber";
 

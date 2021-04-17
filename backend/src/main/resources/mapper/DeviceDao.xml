@@ -30,11 +30,11 @@
             <if test="name != null">
                 `name` = #{name},
             </if>
-            <if test="state != null">
-                `description` = #{state},
+            <if test="description != null">
+                `description` = #{description},
             </if>
-            <if test="stage != null">
-                `creatorName` = #{stage},
+            <if test="creatorName != null">
+                `create_by` = #{creatorName},
             </if>
             <if test="type != null">
                 `type` = #{type},
