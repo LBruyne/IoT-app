@@ -1,26 +1,24 @@
-package cn.edu.zju.cs.bs;
+package com.hinsliu.iotapp.domain.model.message;
 
-public class IOTMessage {
+/**
+ * @Description: model for device massage
+ * @author: liuxuanming
+ * @date: 2021/04/15 8:16 下午
+ */
+public class MqttMessageDO {
 
-    // 设备ID
     private String clientId;
 
-    // 上报信息
     private String info;
 
-    //设备数据
-    private int value;
+    private Integer value;
 
-    //是否告警，0-正常，1-告警
-    private int alert;
+    private Integer alert;
 
-    //设备位置，经度
     private double lng;
 
-    //设备位置，纬度
     private double lat;
 
-    //上报时间，ms
     private long timestamp;
 
     public String getClientId() {
@@ -39,19 +37,19 @@ public class IOTMessage {
         this.info = info;
     }
 
-    public int getValue() {
+    public Integer getValue() {
         return value;
     }
 
-    public void setValue(int value) {
+    public void setValue(Integer value) {
         this.value = value;
     }
 
-    public int getAlert() {
+    public Integer getAlert() {
         return alert;
     }
 
-    public void setAlert(int alert) {
+    public void setAlert(Integer alert) {
         this.alert = alert;
     }
 

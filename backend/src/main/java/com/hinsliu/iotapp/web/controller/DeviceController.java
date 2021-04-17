@@ -1,5 +1,6 @@
 package com.hinsliu.iotapp.web.controller;
 
+import com.hinsliu.iotapp.web.annotation.AuthToken;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,4 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/app/device")
 public class DeviceController {
+
+    // @AuthToken
+
 }

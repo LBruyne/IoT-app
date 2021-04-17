@@ -1,15 +1,11 @@
-package com.hinsliu.iotapp.domain.model.device;
-
-import java.io.Serializable;
+package com.hinsliu.iotapp.domain.query;
 
 /**
- * @Description: model for IoT devices.
+ * @Description: query for updating device info.
  * @author: liuxuanming
- * @date: 2021/03/25 1:33 下午
+ * @date: 2021/04/17 3:13 下午
  */
-public class IoTDeviceDO implements Serializable {
-
-    private Integer id;
+public class DeviceUpdateQuery {
 
     private String code;
 
@@ -17,21 +13,11 @@ public class IoTDeviceDO implements Serializable {
 
     private String description;
 
-    private String createTime;
-
     private String creatorName;
 
     private Integer type;
 
     private String updateTime;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getCode() {
         return code;
@@ -57,14 +43,6 @@ public class IoTDeviceDO implements Serializable {
         this.description = description;
     }
 
-    public String getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
-    }
-
     public String getCreatorName() {
         return creatorName;
     }
@@ -88,5 +66,4 @@ public class IoTDeviceDO implements Serializable {
     public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
     }
-
 }

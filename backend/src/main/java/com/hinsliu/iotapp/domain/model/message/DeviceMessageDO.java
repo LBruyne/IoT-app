@@ -1,27 +1,27 @@
-package cn.edu.zju.cs.bs;
+package com.hinsliu.iotapp.domain.model.message;
 
-public class IOTMessage {
+import java.util.Date;
 
-    // 设备ID
+/**
+ * @Description: do for device message.
+ * @author: liuxuanming
+ * @date: 2021/04/17 5:11 下午
+ */
+public class DeviceMessageDO {
+
     private String clientId;
 
-    // 上报信息
     private String info;
 
-    //设备数据
-    private int value;
+    private Integer value;
 
-    //是否告警，0-正常，1-告警
-    private int alert;
+    private Integer alert;
 
-    //设备位置，经度
     private double lng;
 
-    //设备位置，纬度
     private double lat;
 
-    //上报时间，ms
-    private long timestamp;
+    private String timestamp;
 
     public String getClientId() {
         return clientId;
@@ -39,19 +39,19 @@ public class IOTMessage {
         this.info = info;
     }
 
-    public int getValue() {
+    public Integer getValue() {
         return value;
     }
 
-    public void setValue(int value) {
+    public void setValue(Integer value) {
         this.value = value;
     }
 
-    public int getAlert() {
+    public Integer getAlert() {
         return alert;
     }
 
-    public void setAlert(int alert) {
+    public void setAlert(Integer alert) {
         this.alert = alert;
     }
 
@@ -71,11 +71,11 @@ public class IOTMessage {
         this.lat = lat;
     }
 
-    public long getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(long timestamp) {
+    public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
 }

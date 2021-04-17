@@ -14,7 +14,7 @@ public class MQTTConfig {
 
     public final static Integer DEVICE_NUM = 5;
 
-    public final static String TOPIC = "testapp";
+    public final static String TOPIC = "/iotapp/ap";
 
     public final static String DEVICE_ID_PREFIX = "device";
 
