@@ -15,6 +15,8 @@ public class DeviceUpdateQuery {
 
     private String creatorName;
 
+    private String createTime;
+
     private Integer type;
 
     private String updateTime;
@@ -41,6 +43,14 @@ public class DeviceUpdateQuery {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
     }
 
     public String getCreatorName() {
