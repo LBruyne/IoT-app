@@ -9,15 +9,13 @@ import java.io.Serializable;
  */
 public class PageParam implements Serializable {
 
-    private static final Integer MAX_PAGE_SIZE = 15;
-
     private Integer page;
 
     private Integer pageSize;
 
     private Integer offset;
 
-    PageParam() {
+    public PageParam() {
         this.setOffset();
     }
 

@@ -2,12 +2,13 @@ package com.hinsliu.iotapp.web.controller;
 
 import com.hinsliu.iotapp.biz.common.UserLoginManager;
 import com.hinsliu.iotapp.biz.device.DeviceManager;
+import com.hinsliu.iotapp.domain.Page;
 import com.hinsliu.iotapp.domain.RpcResult;
 import com.hinsliu.iotapp.domain.query.DeviceInfoQuery;
 import com.hinsliu.iotapp.domain.query.DeviceMessageQuery;
 import com.hinsliu.iotapp.domain.query.DeviceUpdateQuery;
-import com.hinsliu.iotapp.domain.view.DeviceInfoDTO;
-import com.hinsliu.iotapp.domain.view.DeviceMessageDTO;
+import com.hinsliu.iotapp.domain.view.common.DeviceInfoDTO;
+import com.hinsliu.iotapp.domain.view.common.DeviceMessageDTO;
 import com.hinsliu.iotapp.web.annotation.AuthToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,13 +35,13 @@ public class DeviceController {
 
     @AuthToken
     @RequestMapping(value = "/list", method = {RequestMethod.POST})
-    public RpcResult<DeviceInfoDTO> getDeviceList(@RequestBody DeviceInfoQuery query) {
+    public RpcResult<Page<DeviceInfoDTO>> getDeviceList(@RequestBody(required = false) DeviceInfoQuery query) {
         return deviceManager.queryByPage(query);
     }
 
     @AuthToken
     @RequestMapping(value = "/message", method = {RequestMethod.POST})
-    public RpcResult<DeviceMessageDTO> getDeviceMessage(@RequestBody DeviceMessageQuery query) {
+    public RpcResult<Page<DeviceMessageDTO>> getDeviceMessage(@RequestBody DeviceMessageQuery query) {
         return deviceManager.queryMessage(query);
     }
 

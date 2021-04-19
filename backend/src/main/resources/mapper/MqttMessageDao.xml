@@ -2,9 +2,48 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.hinsliu.iotapp.dal.message.MqttMessageDao">
 
+    <resultMap id="BaseResultMap" type="com.hinsliu.iotapp.domain.model.message.DeviceMessageDO">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="client" jdbcType="VARCHAR" property="clientId" />
+        <result column="info" jdbcType="VARCHAR" property="info" />
+        <result column="value" jdbcType="INTEGER" property="value" />
+        <result column="alert" jdbcType="INTEGER" property="alert" />
+        <result column="longitude" jdbcType="DOUBLE" property="lng" />
+        <result column="latitude" jdbcType="DOUBLE" property="lat" />
+        <result column="timestamp" jdbcType="TIMESTAMP" property="timestamp" />
+    </resultMap>
+
+    <sql id="BaseWhereCond">
+        <if test="code != null">
+            and code like concat('%', #{code}, '%')
+        </if>
+        <if test="startTime != null">
+            <![CDATA[
+            and `timestamp` >= #{startTime}
+            ]]>
+        </if>
+        <if test="endTime != null">
+            <![CDATA[
+            and `timestamp` <= #{endTime}
+            ]]>
+        </if>
+    </sql>
+
     <insert id="insert" parameterType="com.hinsliu.iotapp.domain.model.message.DeviceMessageDO">
         insert into t_device_message (client, info, value, alert, longitude, latitude, timestamp)
         values ( #{clientId}, #{info}, #{value}, #{alert}, #{lng}, #{lat}, #{timestamp} )
     </insert>
+
+    <select id="queryByPage" parameterType="com.hinsliu.iotapp.domain.query.DeviceMessageQuery" resultMap="BaseResultMap">
+        select `id`, `client`, `info`, `value`, `alert`, `longitude`, `latitude`, `timestamp`
+        from t_device_message
+        <where>
+            <include refid="BaseWhereCond"></include>
+        </where>
+        order by `timestamp` DESC
+        <if test="pageSize != null and offset != null">
+            limit #{offset}, #{pageSize}
+        </if>
+    </select>
 
 </mapper>

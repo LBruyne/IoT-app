@@ -12,10 +12,55 @@
         <result column="type" jdbcType="INTEGER" property="type" />
     </resultMap>
 
+    <sql id="BaseWhereCond">
+        <if test="code != null">
+            and code like concat('%', #{code}, '%')
+        </if>
+        <if test="name != null">
+            and name like concat('%', #{name}, '%')
+        </if>
+        <if test="creatorName != null">
+            and create_by like concat('%', #{creatorName}, '%')
+        </if>
+        <if test="type != null">
+            and type = #{type}
+        </if>
+        <if test="startTime != null">
+            <![CDATA[
+            and create_time >= #{startTime}
+            ]]>
+        </if>
+        <if test="endTime != null">
+            <![CDATA[
+            and create_time <= #{endTime}
+            ]]>
+        </if>
+    </sql>
+
     <select id="selectByClientId" parameterType="java.lang.String" resultMap="BaseResultMap">
         select `id`, `code`, `name`, `description`, `create_time`, `create_by`, `update_time`, `type`
         from t_device_info
         where code = #{clientId, jdbcType=VARCHAR}
+    </select>
+
+    <select id="queryByPage" parameterType="com.hinsliu.iotapp.domain.query.DeviceInfoQuery" resultMap="BaseResultMap">
+        select `id`, `code`, `name`, `description`, `create_time`, `create_by`, `update_time`, `type`
+        from t_device_info
+        <where>
+            <include refid="BaseWhereCond"/>
+        </where>
+        order by update_time DESC
+        <if test="pageSize != null and offset != null">
+            limit #{offset}, #{pageSize}
+        </if>
+    </select>
+
+    <select id="queryTotalCount" parameterType="com.hinsliu.iotapp.domain.query.DeviceInfoQuery">
+        select distinct count(*)
+        from t_device_info
+        <where>
+            <include refid="BaseWhereCond"></include>
+        </where>
     </select>
 
     <insert id="insert" parameterType="com.hinsliu.iotapp.domain.model.device.IoTDeviceDO">

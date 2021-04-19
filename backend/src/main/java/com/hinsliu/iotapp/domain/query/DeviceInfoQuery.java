@@ -1,11 +1,15 @@
 package com.hinsliu.iotapp.domain.query;
 
+import com.hinsliu.iotapp.domain.PageParam;
+
+import java.io.Serializable;
+
 /**
  * @Description: query for device detail info.
  * @author: liuxuanming
  * @date: 2021/04/17 8:55 下午
  */
-public class DeviceInfoQuery {
+public class DeviceInfoQuery extends PageParam implements Serializable {
 
     private String user;
 
@@ -13,11 +17,13 @@ public class DeviceInfoQuery {
 
     private String name;
 
-    private String createTime;
-
     private String creatorName;
 
     private Integer type;
+
+    private String startTime;
+
+    private String endTime;
 
     public String getUser() {
         return user;
@@ -43,14 +49,6 @@ public class DeviceInfoQuery {
         this.name = name;
     }
 
-    public String getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
-    }
-
     public String getCreatorName() {
         return creatorName;
     }
@@ -65,5 +63,21 @@ public class DeviceInfoQuery {
 
     public void setType(Integer type) {
         this.type = type;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
     }
 }
