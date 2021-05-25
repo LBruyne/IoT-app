@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.hinsliu.iotapp.dal.common.UserInfoDao">
-    <resultMap id="BaseResultMap" type="com.hinsliu.iotapp.domain.model.common.UserInfoDO">
+    <resultMap id="BaseResultMap" type="com.hinsliu.iotapp.domain.model.UserInfoDO">
         <id column="id" jdbcType="INTEGER" property="id" />
         <result column="name" jdbcType="VARCHAR" property="userName" />
         <result column="password" jdbcType="VARCHAR" property="userPassword" />
@@ -20,16 +20,12 @@
         <if test="userPassword != null">
             and password = #{userPassword}
         </if>
+        <if test="email != null">
+            and email = #{email}
+        </if>
     </sql>
 
-    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-        SELECT
-        <include refid="Base_Column_List"></include>
-        FROM t_user_info
-        WHERE id = #{id, jdbcType=INTEGER}
-    </select>
-
-    <select id="queryByInfo" parameterType="com.hinsliu.iotapp.domain.query.UserLoginQuery" resultMap="BaseResultMap">
+    <select id="query" parameterType="com.hinsliu.iotapp.domain.query.UserLoginQuery" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"></include>
         FROM t_user_info
@@ -38,16 +34,18 @@
         </where>
     </select>
     
-    <select id="queryByRegisterForm" parameterType="com.hinsliu.iotapp.domain.query.UserRegisterForm" resultMap="BaseResultMap">
+    <select id="queryByRegister" parameterType="com.hinsliu.iotapp.domain.query.UserRegisterQuery" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"></include>
         from t_user_info
         where name = #{userName, jdbcType=VARCHAR}
-            or
-              email = #{email, jdbcType=VARCHAR}
+           or email = #{email, jdbcType=VARCHAR}
     </select>
 
-    <insert id="insert" parameterType="com.hinsliu.iotapp.domain.model.common.UserInfoDO">
+    <insert id="insert" parameterType="com.hinsliu.iotapp.domain.model.UserInfoDO">
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
         insert into t_user_info (name, password, email)
         values (#{userName, jdbcType=VARCHAR}, #{userPassword, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR})
     </insert>

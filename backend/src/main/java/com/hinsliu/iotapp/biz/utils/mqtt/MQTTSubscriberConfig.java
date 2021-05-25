@@ -1,6 +1,6 @@
 package com.hinsliu.iotapp.biz.utils.mqtt;
 
-import com.hinsliu.iotapp.biz.mqtt.MqttMessageManager;
+import com.hinsliu.iotapp.biz.DeviceMessageManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.annotation.ServiceActivator;
@@ -12,8 +12,6 @@ import org.springframework.integration.mqtt.support.DefaultPahoMessageConverter;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHandler;
 
-import javax.annotation.Resource;
-
 /**
  * @Description: subscriber config.
  * @author: liuxuanming
@@ -22,9 +20,9 @@ import javax.annotation.Resource;
 @Configuration
 public class MQTTSubscriberConfig {
 
-    private final MqttMessageManager mqttMessageReceiver;
+    private final DeviceMessageManager mqttMessageReceiver;
 
-    public MQTTSubscriberConfig(MqttMessageManager mqttMessageReceiver) {
+    public MQTTSubscriberConfig(DeviceMessageManager mqttMessageReceiver) {
         this.mqttMessageReceiver = mqttMessageReceiver;
     }
 

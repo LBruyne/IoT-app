@@ -1,83 +1,33 @@
 package com.hinsliu.iotapp.domain.query;
 
 import com.hinsliu.iotapp.domain.PageParam;
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @Description: query for device detail info.
  * @author: liuxuanming
  * @date: 2021/04/17 8:55 下午
  */
-public class DeviceInfoQuery extends PageParam implements Serializable {
-
-    private String user;
+@Data
+public class DeviceInfoQuery extends PageParam {
 
     private String code;
 
     private String name;
 
-    private String creatorName;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date creatorName;
 
     private Integer type;
 
-    private String startTime;
+    private Date startTime;
 
-    private String endTime;
+    private Date endTime;
 
-    public String getUser() {
-        return user;
-    }
-
-    public void setUser(String user) {
-        this.user = user;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCreatorName() {
-        return creatorName;
-    }
-
-    public void setCreatorName(String creatorName) {
-        this.creatorName = creatorName;
-    }
-
-    public Integer getType() {
-        return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
-    }
-
-    public String getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
-    }
-
-    public String getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
-    }
 }

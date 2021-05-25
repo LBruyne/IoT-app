@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.hinsliu.iotapp.dal.device.DeviceDao">
-    <resultMap id="BaseResultMap" type="com.hinsliu.iotapp.domain.model.device.IoTDeviceDO">
+    <resultMap id="BaseResultMap" type="com.hinsliu.iotapp.domain.model.DeviceDO">
         <id column="id" jdbcType="INTEGER" property="id" />
         <result column="code" jdbcType="VARCHAR" property="code" />
         <result column="name" jdbcType="VARCHAR" property="name" />
@@ -55,7 +55,7 @@
         </if>
     </select>
 
-    <select id="queryTotalCount" parameterType="com.hinsliu.iotapp.domain.query.DeviceInfoQuery">
+    <select id="queryTotalCount" parameterType="com.hinsliu.iotapp.domain.query.DeviceInfoQuery" resultType="java.lang.Integer">
         select distinct count(*)
         from t_device_info
         <where>
@@ -63,13 +63,15 @@
         </where>
     </select>
 
-    <insert id="insert" parameterType="com.hinsliu.iotapp.domain.model.device.IoTDeviceDO">
+    <insert id="insert" parameterType="com.hinsliu.iotapp.domain.model.DeviceDO">
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
         insert into t_device_info ( code, name, description, create_time, create_by, update_time, type)
-        values ( #{code, jdbcType=VARCHAR}, #{name, jdbcType=VARCHAR}, #{description, jdbcType=VARCHAR},
-                #{createTime, jdbcType=VARCHAR}, #{creatorName, jdbcType=VARCHAR}, #{updateTime, jdbcType=VARCHAR}, #{type, jdbcType=INTEGER} )
+        values ( #{code}, #{name}, #{description}, #{createTime}, #{creatorName}, #{updateTime}, #{type} )
     </insert>
 
-    <update id="updateDeviceInfo" parameterType="com.hinsliu.iotapp.domain.query.DeviceUpdateQuery">
+    <update id="update" parameterType="com.hinsliu.iotapp.domain.model.DeviceDO">
         update t_device_info
         <set>
             <if test="name != null">
@@ -88,7 +90,14 @@
                 `update_time` = #{updateTime}
             </if>
         </set>
-        where code = #{code, jdbcType=VARCHAR}
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="code != null">
+                and code = #{code}
+            </if>
+        </where>
     </update>
 
 </mapper>

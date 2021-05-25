@@ -16,7 +16,6 @@ public class PageParam implements Serializable {
     private Integer offset;
 
     public PageParam() {
-        this.setOffset();
     }
 
     public Integer getPage() {
@@ -35,20 +34,35 @@ public class PageParam implements Serializable {
         this.pageSize = pageSize;
     }
 
+    public void setOffset(Integer offset) {
+        this.offset = offset;
+    }
+
     public Integer getOffset() {
-        return offset;
+        return this.offset;
     }
 
     public void setOffset() {
-        if(getPage() > 0 && getPageSize() > 0) {
-            this.offset = (page - 1) * pageSize;
+        if(getPage() != null && getPageSize() != null) {
+            setOffset((getPage() - 1) * getPageSize());
         }
         else {
-            this.offset = 0;
+            setOffset(0);
         }
     }
 
-    public void setOffset(Integer offset) {
-        this.offset = offset;
+    public static void verify(PageParam pageParam) {
+        if (pageParam.getPage() == null || pageParam.getPage() <= 0) {
+            pageParam.setPage(UtilConstant.DEFAULT_PAGE);
+        }
+        if (pageParam.getPageSize() == null || pageParam.getPageSize() <= 0) {
+            pageParam.setPageSize(UtilConstant.DEFAULT_PAGE_SIZE);
+        }
+        if (pageParam.getPageSize() > UtilConstant.MAX_PAGE_SIZE) {
+            pageParam.setPageSize(UtilConstant.MAX_PAGE_SIZE);
+        }
+        if (pageParam.getOffset() == null) {
+            pageParam.setOffset();
+        }
     }
 }

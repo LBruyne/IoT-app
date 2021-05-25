@@ -19,6 +19,22 @@ public class RpcResult<T> implements Serializable {
 
     private T data;
 
+    public static <T> RpcResult<T> successResult() {
+        return new RpcResult<T>(true, ErrorCodeEnum.SUCCESS.getCode(), "success", null);
+    }
+
+    public static <T> RpcResult<T> successResult(T data) {
+        return new RpcResult<T>(true, ErrorCodeEnum.SUCCESS.getCode(), "success", data);
+    }
+
+    public static <T> RpcResult<T> errorResult(String msg) {
+        return new RpcResult<T>(false, ErrorCodeEnum.FAIL.getCode(), msg, null);
+    }
+
+    public static <T> RpcResult<T> errorResult(int code, String msg) {
+        return new RpcResult<T>(false, code, msg, null);
+    }
+
     public RpcResult(boolean success, int code, String message, T data) {
         this.success = success;
         this.code = code;
@@ -26,26 +42,18 @@ public class RpcResult<T> implements Serializable {
         this.data = data;
     }
 
-    public static<T> RpcResult<T> successResult(T data) {
-        return new RpcResult<T>(true, ErrorCode.SUCCESS.getCode(), ErrorCode.SUCCESS.getDesc(), data);
-    }
-
-    public static<T> RpcResult<T> successResult() {
-        return new RpcResult<T>(true, ErrorCode.SUCCESS.getCode(), ErrorCode.SUCCESS.getDesc(), null);
-    }
-
-
-    public static<T> RpcResult<T> errorResult(String msg) {
-        return new RpcResult<T>(false, ErrorCode.FAIL.getCode(), msg, null);
-    }
-
     public Boolean getSuccess() {
+        return success;
+    }
+
+    public Boolean isSuccess() {
         return success;
     }
 
     public void setSuccess(Boolean success) {
         this.success = success;
-        this.setCode(success ? ErrorCode.SUCCESS.getCode() : this.getCode());
+        this.message = "success";
+        this.setCode(success ? ErrorCodeEnum.SUCCESS.getCode() : this.getCode());
     }
 
     public int getCode() {
@@ -56,7 +64,7 @@ public class RpcResult<T> implements Serializable {
         this.code = code;
     }
 
-    public void setCode(ErrorCode code) {
+    public void setCodeEnum(ErrorCodeEnum code) {
         this.code = code.getCode();
     }
 
