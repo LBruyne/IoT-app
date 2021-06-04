@@ -85,6 +85,7 @@ public class WorkerThread extends Thread {
                 // 设定信息和时间
                 Date now = new Date();
                 msg.setClientId(clientId);
+
                 msg.setInfo("Device Data " + new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(now));
                 // 生成时间戳
                 msg.setTimestamp(now.getTime());

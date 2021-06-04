@@ -1,5 +1,6 @@
 package com.hinsliu.iotapp.domain.view;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
@@ -11,6 +12,8 @@ import java.util.Date;
  */
 @Data
 public class DeviceMessageDTO {
+
+    private Integer id;
 
     private String clientId;
 
@@ -24,6 +27,7 @@ public class DeviceMessageDTO {
 
     private Double lat;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date timestamp;
 
 }

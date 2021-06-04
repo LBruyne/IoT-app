@@ -14,8 +14,6 @@ import java.util.Date;
 @Data
 public class DeviceMessageQuery extends PageParam {
 
-    private String user;
-
     private String code;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

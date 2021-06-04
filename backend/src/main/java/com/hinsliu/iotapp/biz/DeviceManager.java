@@ -11,15 +11,13 @@ import com.hinsliu.iotapp.domain.query.DeviceCreateQuery;
 import com.hinsliu.iotapp.domain.query.DeviceInfoQuery;
 import com.hinsliu.iotapp.domain.query.DeviceMessageQuery;
 import com.hinsliu.iotapp.domain.query.DeviceUpdateQuery;
-import com.hinsliu.iotapp.domain.view.DeviceInfoDTO;
-import com.hinsliu.iotapp.domain.view.DeviceMessageDTO;
+import com.hinsliu.iotapp.domain.view.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -112,5 +110,32 @@ public class DeviceManager {
             log.warn("创建设备{}失败.", item.getName());
             throw new BusinessException(ErrorCodeEnum.FAIL.getCode(), "创建设备失败");
         }
+    }
+
+    public StatisticDTO statistic() {
+        StatisticDTO statisticDTO = new StatisticDTO();
+
+        List<DeviceDO> deviceDOList = deviceDao.getAllDevice();
+        List<DeviceMessageDO> deviceMessageDOList = deviceMessageDao.getAllMessage();
+
+        // 分类统计数据
+        List<Integer> typeData = new ArrayList<Integer>(Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0));
+        for(DeviceDO item : deviceDOList) {
+            Integer type = item.getType();
+            typeData.set(type, typeData.get(type) + 1);
+        }
+        statisticDTO.setTypeData(typeData);
+
+        // PieData统计数据
+        PieGraphDTO pieGraphDTO = new PieGraphDTO();
+        List<String> typeNameList = new LinkedList<>();
+        for(DeviceTypeEnum typeEnum : DeviceTypeEnum.values()) {
+            typeNameList.add(typeEnum.getName());
+        }
+        pieGraphDTO.setNames(typeNameList);
+        pieGraphDTO.setNumbers(typeData);
+        statisticDTO.setPieData(pieGraphDTO);
+
+        return statisticDTO;
     }
 }

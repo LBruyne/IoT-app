@@ -1,5 +1,6 @@
 package com.hinsliu.iotapp.biz.utils.redis;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Jedis;
@@ -9,9 +10,8 @@ import redis.clients.jedis.Jedis;
  * @author: liuxuanming
  * @date: 2021/03/28 9:58 上午
  */
+@Slf4j
 public class RedisUtil {
-
-    private static final Logger logger = LoggerFactory.getLogger(RedisUtil.class);
 
     private String server = "localhost";
 
@@ -27,11 +27,11 @@ public class RedisUtil {
     private RedisUtil() {
         try {
             client = new Jedis(server, port);
-            logger.info("Connect to REDIS in " + server + " " + port);
-            logger.info("Redis is running: " + client.ping());
+            log.info("Connect to REDIS in " + server + " " + port);
+            log.info("Redis is running: " + client.ping());
         }
         catch(Exception e) {
-            logger.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
         }
     }
 
@@ -41,7 +41,7 @@ public class RedisUtil {
             client.close();
         }
         catch(Exception e) {
-            logger.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
         }
     }
 
@@ -54,9 +54,12 @@ public class RedisUtil {
 
     public void set(String key, String value) {
         client.setex(key, EXPIRE_TIME, value);
+        log.warn("REDIS写入键值对{}:{}", key, value);
     }
 
     public String get(String key) {
-        return client.get(key);
+        String value = client.get(key);
+        log.warn("REDIS读取键值对{}:{}", key, value);
+        return value;
     }
 }

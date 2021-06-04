@@ -5,7 +5,7 @@ import lombok.Data;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
-/**
+/**de
  * @Description: query for updating device info.
  * @author: liuxuanming
  * @date: 2021/04/17 3:13 下午

@@ -2,9 +2,6 @@ package com.hinsliu.iotapp.domain.model;
 
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -28,8 +25,8 @@ public class DeviceDO {
 
     private String creatorName;
 
-    private Integer type;
-
     private Date updateTime;
+
+    private Integer type;
 
 }

@@ -23,5 +23,6 @@ public interface DeviceDao {
     Integer insert(DeviceDO item);
 
     Integer update(DeviceDO item);
-    
+
+    List<DeviceDO> getAllDevice();
 }

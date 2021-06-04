@@ -8,15 +8,12 @@
         <result column="info" jdbcType="VARCHAR" property="info" />
         <result column="value" jdbcType="INTEGER" property="value" />
         <result column="alert" jdbcType="INTEGER" property="alert" />
-        <result column="longitude" jdbcType="DOUBLE" property="lng" />
-        <result column="latitude" jdbcType="DOUBLE" property="lat" />
-        <result column="timestamp" jdbcType="TIMESTAMP" property="timestamp" />
+        <result column="longitude" jdbcType="DOUBLE" property="lng" javaType="java.lang.Double"/>
+        <result column="latitude" jdbcType="DOUBLE" property="lat" javaType="java.lang.Double"/>
+        <result column="timestamp" jdbcType="TIMESTAMP" property="timestamp" javaType="java.util.Date"/>
     </resultMap>
 
     <sql id="BaseWhereCond">
-        <if test="id != null">
-            and id = #{id}
-        </if>
         <if test="code != null">
             and client = #{code}
         </if>
@@ -58,6 +55,10 @@
         <where>
             <include refid="BaseWhereCond"></include>
         </where>
+    </select>
+    <select id="getAllMessage" resultType="com.hinsliu.iotapp.domain.model.DeviceMessageDO">
+        select `id`, `client`, `info`, `value`, `alert`, `longitude`, `latitude`, `timestamp`
+        from t_device_message
     </select>
 
 </mapper>

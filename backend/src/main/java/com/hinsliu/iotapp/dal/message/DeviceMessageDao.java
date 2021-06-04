@@ -18,4 +18,6 @@ public interface DeviceMessageDao {
     Integer queryTotalCount(DeviceMessageQuery query);
 
     List<DeviceMessageDO> queryByPage(DeviceMessageQuery query);
+
+    List<DeviceMessageDO> getAllMessage();
 }

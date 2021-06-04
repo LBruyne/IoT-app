@@ -16,6 +16,9 @@ const DefaultLayout = loadable(() =>
 );
 
 // 页面
+const Register = loadable(() =>
+  import(/* webpackChunkName: 'register' */ "./views/Register")
+);
 const Login = loadable(() =>
   import(/* webpackChunkName: 'login' */ "./views/Login")
 );
@@ -28,6 +31,7 @@ const App = () => (
     <Switch>
       <Route path="/" exact render={() => <Redirect to="/index" />} />
       <Route path="/login" component={Login} />
+      <Route path="/register" component={Register} />
       <Route path="/404" component={View404} />
       <Route component={DefaultLayout} />
     </Switch>

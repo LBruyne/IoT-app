@@ -63,7 +63,7 @@ const DefaultLayout = props => {
   };
 
   useEffect(() => {
-    let { pathname } = props.location;
+    // let { pathname } = props.location;
     let timer;
 
     return () => {

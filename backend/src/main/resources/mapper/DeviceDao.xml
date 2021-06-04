@@ -6,9 +6,9 @@
         <result column="code" jdbcType="VARCHAR" property="code" />
         <result column="name" jdbcType="VARCHAR" property="name" />
         <result column="description" jdbcType="VARCHAR" property="description" />
-        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" javaType="java.util.Date" />
         <result column="create_by" jdbcType="VARCHAR" property="creatorName" />
-        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" javaType="java.util.Date" />
         <result column="type" jdbcType="INTEGER" property="type" />
     </resultMap>
 
@@ -61,6 +61,10 @@
         <where>
             <include refid="BaseWhereCond"></include>
         </where>
+    </select>
+    <select id="getAllDevice" resultType="com.hinsliu.iotapp.domain.model.DeviceDO">
+        select `id`, `code`, `name`, `description`, `create_time`, `create_by`, `update_time`, `type`
+        from t_device_info
     </select>
 
     <insert id="insert" parameterType="com.hinsliu.iotapp.domain.model.DeviceDO">

@@ -20,9 +20,6 @@
         <if test="userPassword != null">
             and password = #{userPassword}
         </if>
-        <if test="email != null">
-            and email = #{email}
-        </if>
     </sql>
 
     <select id="query" parameterType="com.hinsliu.iotapp.domain.query.UserLoginQuery" resultMap="BaseResultMap">

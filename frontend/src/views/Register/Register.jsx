@@ -1,20 +1,12 @@
-import React, { useState, useEffect } from "react";
-import {
-  Layout,
-  Input,
-  Form,
-  Button,
-  Divider,
-  message,
-  notification
-} from "antd";
+import React, { useState } from "react";
+import { Layout, Input, Form, Button, Divider, message } from "antd";
 import { withRouter } from "react-router-dom";
 import axios from "@/api";
 import { BASE_URL } from "@/api/config";
 import "@/style/view-style/login.scss";
-import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import { UserOutlined, LockOutlined, HomeOutlined } from "@ant-design/icons";
 
-const Login = props => {
+const Register = props => {
   const [loading, setLoading] = useState(false);
 
   const { getFieldDecorator } = props.form;
@@ -23,59 +15,34 @@ const Login = props => {
     e.preventDefault();
     props.form.validateFields((err, values) => {
       if (!err) {
-        let { username, password } = values;
+        let { username, password, email } = values;
         let postData = {
           userName: username,
-          userPassword: password
+          userPassword: password,
+          email: email
         };
-        // 发起登陆请求
+        // 发起注册请求
         axios
-          .post(`${BASE_URL}/login`, postData)
+          .post(`${BASE_URL}/register`, postData)
           .then(res => {
             console.log(res.data);
             if (res.data.code === 0) {
-              // 权限校验 模拟接口返回用户权限标识
-              let user = res.data.data;
-              if (user) {
-                switch (user.userName) {
-                  case "admin":
-                    user.auth = 0;
-                    break;
-                  default:
-                    user.auth = 1;
-                }
-              }
-              localStorage.setItem("user", JSON.stringify(user));
-              localStorage.setItem("token", res.data.data.token);
-              message.success("登录成功!");
-              if (localStorage.getItem("user")) {
-                setLoading(true);
-                setTimeout(() => {
-                  message.success("登录成功!");
-                  props.history.push("/");
-                }, 1000);
-              }
+              message.success("注册成功！请返回登陆");
+              setLoading(true);
+              setTimeout(() => {
+                message.success("正在返回...");
+                props.history.push("/login");
+              }, 1000);
             } else {
-              message.error("登陆失败, " + res.data.message);
+              message.error("注册失败, " + res.data.message);
             }
           })
           .catch(err => {
-            message.error("登陆失败，账号不存在或密码错误");
+            message.error("注册失败，账号存在或格式错误");
           });
       }
     });
   };
-
-  useEffect(() => {
-    notification.open({
-      message: "欢迎使用物联网设备管理平台",
-      duration: null,
-      description: "管理员账号admin(admin)，其他游客请注册后使用平台"
-    });
-    return () => {
-      notification.destroy();
-    };
-  }, []);
 
   return (
     <Layout className="login animated fadeIn">
@@ -101,22 +68,27 @@ const Login = props => {
               )}
             </Form.Item>
             <Form.Item>
+              {getFieldDecorator("email", {
+                rules: [{ required: true, message: "请输入邮箱" }]
+              })(<Input prefix={<HomeOutlined />} placeholder="邮箱" />)}
+            </Form.Item>
+            <Form.Item>
               <Button
                 type="primary"
                 htmlType="submit"
                 className="login-form-button"
                 loading={loading}
               >
-                登录
+                注册
               </Button>
               <Button
                 type="dashed"
                 className="login-form-button"
                 onClick={event => {
-                  props.history.push("/register");
+                  props.history.push("/login");
                 }}
               >
-                注册
+                登陆
               </Button>
             </Form.Item>
           </Form>
@@ -126,4 +98,4 @@ const Login = props => {
   );
 };
 
-export default withRouter(Form.create()(Login));
+export default withRouter(Form.create()(Register));
