@@ -1,0 +1,19 @@
+server:
+  port: 8001
+
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/iotapp?characterEncoding=utf8&useSSL=false
+    username: ${mysql.username:root}
+    password: ${mysql.password:lxmxx1008}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis:
+  type-aliases-package: com.hinsliu.iotapp.domain
+  mapper-locations: classpath:mapper/**/*.xml
+
+logging:
+  level:
+    root: INFO
+  file:
+    path: ./logs

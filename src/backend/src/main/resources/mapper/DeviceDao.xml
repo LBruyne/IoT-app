@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hinsliu.iotapp.dal.device.DeviceDao">
+    <resultMap id="BaseResultMap" type="com.hinsliu.iotapp.domain.model.DeviceDO">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="code" jdbcType="VARCHAR" property="code" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="description" jdbcType="VARCHAR" property="description" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" javaType="java.util.Date" />
+        <result column="create_by" jdbcType="VARCHAR" property="creatorName" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" javaType="java.util.Date" />
+        <result column="type" jdbcType="INTEGER" property="type" />
+    </resultMap>
+
+    <sql id="BaseWhereCond">
+        <if test="code != null">
+            and code like concat('%', #{code}, '%')
+        </if>
+        <if test="name != null">
+            and name like concat('%', #{name}, '%')
+        </if>
+        <if test="creatorName != null">
+            and create_by like concat('%', #{creatorName}, '%')
+        </if>
+        <if test="type != null">
+            and type = #{type}
+        </if>
+        <if test="startTime != null">
+            <![CDATA[
+            and create_time >= #{startTime}
+            ]]>
+        </if>
+        <if test="endTime != null">
+            <![CDATA[
+            and create_time <= #{endTime}
+            ]]>
+        </if>
+    </sql>
+
+    <select id="selectByClientId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select `id`, `code`, `name`, `description`, `create_time`, `create_by`, `update_time`, `type`
+        from t_device_info
+        where code = #{clientId, jdbcType=VARCHAR}
+    </select>
+
+    <select id="queryByPage" parameterType="com.hinsliu.iotapp.domain.query.DeviceInfoQuery" resultMap="BaseResultMap">
+        select `id`, `code`, `name`, `description`, `create_time`, `create_by`, `update_time`, `type`
+        from t_device_info
+        <where>
+            <include refid="BaseWhereCond"/>
+        </where>
+        order by update_time DESC
+        <if test="pageSize != null and offset != null">
+            limit #{offset}, #{pageSize}
+        </if>
+    </select>
+
+    <select id="queryTotalCount" parameterType="com.hinsliu.iotapp.domain.query.DeviceInfoQuery" resultType="java.lang.Integer">
+        select distinct count(*)
+        from t_device_info
+        <where>
+            <include refid="BaseWhereCond"></include>
+        </where>
+    </select>
+    <select id="getAllDevice" resultType="com.hinsliu.iotapp.domain.model.DeviceDO">
+        select `id`, `code`, `name`, `description`, `create_time`, `create_by`, `update_time`, `type`
+        from t_device_info
+    </select>
+
+    <insert id="insert" parameterType="com.hinsliu.iotapp.domain.model.DeviceDO">
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_device_info ( code, name, description, create_time, create_by, update_time, type)
+        values ( #{code}, #{name}, #{description}, #{createTime}, #{creatorName}, #{updateTime}, #{type} )
+    </insert>
+
+    <update id="update" parameterType="com.hinsliu.iotapp.domain.model.DeviceDO">
+        update t_device_info
+        <set>
+            <if test="name != null">
+                `name` = #{name},
+            </if>
+            <if test="description != null">
+                `description` = #{description},
+            </if>
+            <if test="creatorName != null">
+                `create_by` = #{creatorName},
+            </if>
+            <if test="type != null">
+                `type` = #{type},
+            </if>
+            <if test="updateTime != null">
+                `update_time` = #{updateTime}
+            </if>
+        </set>
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="code != null">
+                and code = #{code}
+            </if>
+        </where>
+    </update>
+
+</mapper>

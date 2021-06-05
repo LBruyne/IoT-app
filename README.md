@@ -4,7 +4,7 @@
 
 ## Introduction
 
-这是一个IoT物联网设备管理APP。该应用用于浙江大学2020-2021学年春夏学期B/S体系软件设计课程作业。
+这是一个IOT物联网设备管理APP。该应用用于浙江大学2020-2021学年春夏学期B/S体系软件设计课程大作业，由我一人独立开发，版权所有。
 
 ### 功能列表
 
@@ -33,9 +33,9 @@
 
 项目使用前后端分离的开发范式，均由我本人完成。
 
-- 前端使用React + Antd组件库进行设计
+- 前端使用React + Antd组件库进行设计（拥抱Hook风格）
 
-- 后端使用Spring + SpringMVC进行设计，用SpringBoot框架进行配置简化
+- 后端使用Spring + SpringMVC进行设计，用SpringBoot框架进行配置简化，JDK1.8
 
 - 数据库使用本地的MySQL进行数据储存，使用本地的Redis进行用户Token储存服务
 
@@ -45,13 +45,19 @@
 
 ### 项目目录结构
 
-- frontend文件夹中存放前端工程文件，开发IDE为WebStorm
+- 本目录下存放README文件，请先阅读本文件；以及本项目的功能快速浏览（glance-over）。
 
-- backend文件夹中存放后端工程文件，开发IDE为IntelliJ IDEA
+- src文件夹下存放的为本项目源码，其中：
 
-- client文件夹中存放一个SpringBoot框架下的IoT设备模拟器，用来模拟设备对数据的发布。该部分代码由bs.cs.zju.edu.cn的老师提供，我对其进行了改动和封装
+  - frontend文件夹中存放前端工程文件，开发IDE为WebStorm
 
-- builder-SQL文件夹中存放的是MySQL的建表文件，其中create用来创建数据库和表，source用来添加测试数据
+  - backend文件夹中存放后端工程文件，开发IDE为IntelliJ IDEA
+
+  - client文件夹中存放一个SpringBoot框架下的IoT设备模拟器，用来模拟设备对数据的发布。该部分代码由bs.cs.zju.edu.cn的老师提供，我对其进行了改动和封装。
+
+- build文件夹中存放的是MySQL的建表文件，其中create用来创建数据库和表，source用来添加测试数据
+  
+- documents文件夹下存放了本项目的设计文档，使用手册（包含功能测试）
 
 
 ### 如何启动应用
@@ -72,7 +78,37 @@
 
 #### 运行后端工程项目
 
+完成对MySQL服务的配置、对Redis的配置、对Mosquitto连接的配置
+
+运行后端工程文件下的src/IoTApplicationRunner.java文件，启动后端进程
+
+#### 运行Client测试项目
+
+完成对Mosquitto连接的配置以及设备数量等配置
+
+然后使用Maven运行
+
+```maven
+
+mvn clean package
+
+```
+
+得到JAR文件，然后用JAR的方式运行该文件
 #### 运行前端工程项目
+
+在前端工程下运行
+
+```shell
+
+npm install
+
+npm run start
+
+```
+
+启动React服务。在浏览器中搜索localhost:3000，就可以使用本应用
+
 
 
 

@@ -1,0 +1,55 @@
+.index {
+  padding: 1.6rem 0;
+  .index-header {
+    color: #fff;
+    span {
+      font-weight: 600;
+      font-size: 2rem;
+    }
+    .base-style {
+      display: flex;
+    }
+
+    .other {
+      background-color: #f3eded;
+    }
+
+    .smart-wearing {
+      background-color: #D37091;
+    }
+
+    .smart-material {
+      background-color: #F28086;
+    }
+
+    .smart-housing {
+      background-color: #FF9778;
+    }
+
+    .aerobat {
+      background-color: #FFB56B;
+    }
+
+    .smart-internet {
+      background-color: #FFD666;
+    }
+
+    .smart-offline {
+      background-color: #007BC8;
+    }
+
+    .new-iot {
+      background-color: #007575;
+    }
+
+    .icon-style {
+      color: #fbfbf4b3;
+      font-size: 6rem;
+      padding-right: 1rem;
+    }
+  }
+  .bar-header {
+    display: flex;
+    justify-content: space-between;
+  }
+}
